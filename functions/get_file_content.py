@@ -1,5 +1,9 @@
 import os
 
+# from config.py import truncate
+
+MAX_CHARS = 10000
+
 
 def get_file_content(working_directory, file_path):
     try:
@@ -14,10 +18,10 @@ def get_file_content(working_directory, file_path):
             return f'Error: File not found or is not a regular file: "{file_path}"'
 
         with open(full_path, "r") as f:
-            file_content_string = f.read()
-
-        if len(file_content_string) > 10000:
-            file_content_string = f'{file_content_string[:10001]}\n[...File "{file_path}" truncated at 10000 characters].'
+            file_string_content = f.read()
+            if len(file_string_content) < MAX_CHARS:
+                return file_string_content
+            return f'{file_string_content[:MAX_CHARS]}\n[...File "{file_path}" truncated at 10000 characters].'
 
     except Exception as e:
         print(f"Error: {e}")
